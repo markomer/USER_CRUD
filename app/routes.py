@@ -32,18 +32,25 @@ def get_all_users():
 @app.get("/users/<int:pk>/")
 def get_user_by_id(pk):
   target_user = user.select_by_id(pk)
+              # if 'target_user" is not empty
+    # do something here
   resp = {
     "status": "ok",
     "message": "success",
-    "user": target_user
   }
-  return resp
+  if target_user:
+    resp["user"] = target_user
+    return resp
+  else:
+    resp["status"] = "error"
+    resp["message"] = "User not found"
+    return resp, 404
 
 @app.post("/users/")
 def create_user():
-  user_data = request.json
+  user_data = request.json      # request is a Flask context object
   user.insert(user_data)
-  return "", 204
+  return "", 204            # No content; successful but no content
 
 @app.put("/users/<int:pk>/")
 def update_user(pk):
@@ -54,5 +61,5 @@ def update_user(pk):
 
 @app.delete("/users/<int:pk>/")
 def deactivate_user(pk):
-  user.deactivate(pk)
+  user.deactivate(pk)       # Soft Delete
   return "", 204

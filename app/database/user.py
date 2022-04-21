@@ -1,10 +1,10 @@
 from app.database import get_db
 
 
-def output_formatter(results):
-  out = []
-  for result in results:
-    result_dict = {
+def output_formatter(results):    # = tuple of tuples
+  out = []                        # empty list
+  for result in results:          # For each loop.
+    result_dict = {         # dictionayies
       "id": result[0],
       "first_name": result[1],
       "last_name": result[2],
@@ -17,7 +17,7 @@ def output_formatter(results):
 
 def insert(user_dict):
   value_tuple = (
-    user_dict.get("fitst_name"),
+    user_dict.get("first_name"),
     user_dict.get("last_name"),
     user_dict.get("hobbies"),
   )
@@ -47,7 +47,7 @@ def select_by_id(pk):
   return output_formatter(results)
   
 
-def update(pk, user_data):
+def update(pk, user_data):      # user_data (parameter) is dict type
   value_tuple = (
     user_data.get("first_name"),
     user_data.get("last_name"),
@@ -59,6 +59,21 @@ def update(pk, user_data):
     SET first_name=?,
     last_name=?,
     hobbies=?
+    WHERE id=?
+  """
+  cursor = get_db()
+  cursor.execute(statement, value_tuple)
+  cursor.commit()
+  cursor.close()
+
+def deactivate(pk, user_data):
+  value_tuple = (
+    user_data.get("acitve"),
+    pk
+  )
+  statement = """
+    UPDATE user
+    SET active=0
     WHERE id=?
   """
   cursor = get_db()

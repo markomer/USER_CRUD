@@ -8,12 +8,11 @@ URL = "http://127.0.0.1:5000/users"
 def update_user(user_data, user_id):
   url = "%s/%s/" % (URL, user_id)
   print(user_data)
-  requests.put(URL, json=user_data)
-  if response.status_code ==200:
+  response = requests.put(url, json=user_data)
+  if response.status_code == 204:
     print("Successfully updated user.")
   else:
     print("Something went wrong while trying to update user.")
-
 
 
 def get_user(user_id):

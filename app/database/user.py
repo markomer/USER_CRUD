@@ -1,3 +1,4 @@
+import pkg_resources
 from app.database import get_db
 
 
@@ -66,17 +67,20 @@ def update(pk, user_data):      # user_data (parameter) is dict type
   cursor.commit()
   cursor.close()
 
-def deactivate(pk, user_data):
-  value_tuple = (
-    user_data.get("acitve"),
-    pk
-  )
+def deactivate(pk):
+
+  cursor = get_db()
+  # value_tuple = (
+  #   user_data.get('active'),
+  #   pk
+  # )
+
   statement = """
     UPDATE user
     SET active=0
     WHERE id=?
   """
-  cursor = get_db()
-  cursor.execute(statement, value_tuple)
+
+  cursor.execute(statement, (pk, ))
   cursor.commit()
   cursor.close()

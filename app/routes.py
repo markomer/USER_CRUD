@@ -61,5 +61,51 @@ def update_user(pk):
 
 @app.delete("/users/<int:pk>/")
 def deactivate_user(pk):
+# user+data = request.json  # needed or not..?..
   user.deactivate(pk)       # Soft Delete
+  return "", 204
+
+# ------ Mini Challenge 2 -------------
+
+@app.get("/vehicles/")
+def get_all_vehicles():
+  vehicle_list = vehicle.scan()
+  resp = {
+    "status": "ok",
+    "message": "success",
+    "users": vehicle_list
+  }
+  return resp
+
+@app.post("/vehicles/")
+def create_vehicles():
+  vehicle_data = request.json
+  vehicle.insert(vehicle_data)
+  return "", 204
+
+@app.get("/vehicles/<int:pk>")
+def get_vehicle_by_id(pk):
+  target_vehicle = vehicle.select_by_id(pk)
+  resp = {
+    "status": "ok",
+    "message": "success"
+  }
+
+  if target_vehicle:
+    resp["user"] = target_vehicle
+    return resp
+  else:
+    resp["status"] = "error"
+    resp["message"] = "User not found"
+    return resp, 404
+
+@app.put("/vehicles/<int:pk>/")
+def update_vehicle(pk):
+  vehicle_data = request.json
+  vehicle.update(pk, vehicle_data)
+  return "", 204
+
+@app.delete("/users/<int:pk>/")
+def deactivate_vehicle(pk):
+  vehicle.deactivate(pk)
   return "", 204

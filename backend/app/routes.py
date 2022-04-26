@@ -6,6 +6,8 @@ from flask import (
 from datetime import datetime
 
 from app.database import user
+from app.database import vehicle
+
 
 app = Flask(__name__)
 VERSION = "1.0.0"
@@ -32,13 +34,11 @@ def get_all_users():
 @app.get("/users/<int:pk>/")
 def get_user_by_id(pk):
   target_user = user.select_by_id(pk)
-              # if 'target_user" is not empty
-    # do something here
   resp = {
-    "status": "ok",
+    "status": "ok",         
     "message": "success",
   }
-  if target_user:
+  if target_user:           # if 'target_user" is not empty
     resp["user"] = target_user
     return resp
   else:

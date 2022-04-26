@@ -1,4 +1,7 @@
+
 from app.database import get_db
+from app.database.user import output_formatter
+
 
 
 def output_formatter(results):
@@ -23,8 +26,8 @@ def insert(vehicle_dict):
     vehicle_dict.get("v_type"),
     vehicle_dict.get("owner_id")
   )
-  statement = """
-    INSERT INTO vehicle (
+  statement = """         
+    INSERT INTO vehicle (    
       color,
       license_plate,
       v_type,
@@ -35,7 +38,6 @@ def insert(vehicle_dict):
   cursor.execute(statement, value_tuple)
   cursor.commit()
   cursor.close()
-
 
 def scan():
   cursor = get_db().execute("SELECT * FROM vehicle WHERE active=1", ())
@@ -58,24 +60,16 @@ def update(pk, vehicle_data):
     pk
   )  
 
-statement = """
-  UPDATE vehicle
-  SET color=?,
-  license_plate=?,
-  v_type=?
-  WHERE id=?
-"""
-# OR
-# statement = """
-#   INSERT INTO user (
-#     color,
-#     license_plate,
-#     v_type,
-#     owner_id
-# ) VALUES (?, ?, ?, ?)
+  statement = """
+    UPDATE vehicle
+    SET color=?,
+    license_plate=?,
+    v_type=?
+    WHERE id=?
+  """
 
-cursor = get_db()
-cursor.execute(statement, value_tuple)
-cursor.commit()
-cursor.close()
+  cursor = get_db()
+  cursor.execute(statement, value_tuple)
+  cursor.commit()
+  cursor.close()
 

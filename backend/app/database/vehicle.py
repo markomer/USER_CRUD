@@ -40,7 +40,7 @@ def insert(vehicle_dict):
   cursor.close()
 
 def scan():
-  cursor = get_db().execute("SELECT * FROM vehicle WHERE active=1", ())
+  cursor = get_db().execute("SELECT * FROM vehicle", ())
   results = cursor.fetchall()
   cursor.close()
   return output_formatter(results)

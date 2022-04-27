@@ -50,7 +50,7 @@ def desplay_users():
     {% for user in users %}
     <li>
       <h1>
-        {{ user ["first_name"] }} user["last_name"]
+        {{ user ["first_name"] }} {{ user["last_name"] }}
       </h1>
       <p>Hobbies: {{ user["hobbies"] }}</p>
     {% endfor %}
@@ -58,5 +58,25 @@ def desplay_users():
   </ul>
 </body>
 </html>
+
+        <th>Vehicle Type</th>
+        <th>Color</th>
+        <th>License Plate</th>
+
+          <td>{{ vehicle["v_type"] }}</td>
+          <td>{{ vehicle["color"] }}</td>
+          <td>{{ vehicle["license_plate"] }}</td>
+
+        {% for vehicle in vehicles %}
+      {% for user in users %} 
+         <tr>
+          <td>{{ vehicle ["v_type"] }}</td>
+          <td>{{ vehicle ["color"] }}</td>
+          <td>{{ vehicle ["license_plate"] }}</td>
+          <td>{{ user ["first_name"] }}</td>
+          <td>{{ user ["last_name"] }}</td>
+        </tr>
+      {% endfor %}
+      {% endfor %}        
     
     user["first_name"] }}

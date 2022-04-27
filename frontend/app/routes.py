@@ -15,3 +15,15 @@ def display_users():
   else:
     return render_template("no_users_error.html")
 
+
+
+@app.route("/")
+def display_vehicles():
+  url = "%s/%s/" % (BACKEND_URL, "vehicles")
+  response = requests.get(url)  
+  if response.status_code == 200:
+    user_data = response.json().get("vehicles")
+    return render_template("index.html", vehicles=vehicle_data)
+  else:
+    return render_template("no_users_error.html")
+
